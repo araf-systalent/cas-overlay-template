@@ -73,6 +73,12 @@
      <version>${cas.version}</version>
 </dependency>
 
+<dependency>
+     <groupId>org.apereo.cas</groupId>
+     <artifactId>cas-server-support-ldap</artifactId>
+     <version>${cas.version}</version>
+</dependency>
+
     </dependencies>
 
     <properties>
@@ -112,6 +118,7 @@
             <id>spring-milestones</id>
             <url>https://repo.spring.io/milestone</url>
         </repository>
+      
     </repositories>
 
     <profiles>

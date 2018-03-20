@@ -1,106 +1,98 @@
 
-<h1>jdcfjhfdjhjhgh</h1>
+
 <div class="box" id="login">
-    <div class="login-header">
-        <h2 th:text="#{cas.login.pagetitle}"></h2>
-        <span class="fa-stack fa-2x hidden-xs">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-        </span>
-    </div>
+	<div class="login-header">
+		<h1 class="hbg">
+			<img src="images/BST_logo.png" alt="logo" />
+		</h1>
+	</div>
+	<form method="post" id="fm1" th:object="${credential}">
 
-    <form method="post" id="fm1" th:object="${credential}">
+		<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+			<span th:each="err : ${#fields.errors('*')}" th:utext="${err}" />
+		</div>
 
-        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-            <span th:each="err : ${#fields.errors('*')}" th:utext="${err}"/>
-        </div>
+		<h2 th:utext="#{screen.welcome.instructions}"></h2>
 
-        <h2 th:utext="#{screen.welcome.instructions}"></h2>
+		<section class="row">
+			<label for="username" th:utext="#{screen.welcome.label.netid}" />
 
-        <section class="row">
-            <label for="username" th:utext="#{screen.welcome.label.netid}"/>
+			<div th:if="${openIdLocalId}">
+				<strong> <span th:utext="${openIdLocalId}" />
+				</strong> <input type="hidden" id="username" name="username"
+					th:value="${openIdLocalId}" />
+			</div>
+			<div th:unless="${openIdLocalId}">
+				<input class="required" id="username" size="25" tabindex="1"
+					type="text" th:field="*{username}"
+					th:accesskey="#{screen.welcome.label.netid.accesskey}"
+					autocomplete="off" />
+			</div>
+		</section>
 
-            <div th:if="${openIdLocalId}">
-                <strong>
-                    <span th:utext="${openIdLocalId}"/>
-                </strong>
-                <input type="hidden"
-                       id="username"
-                       name="username"
-                       th:value="${openIdLocalId}"/>
-            </div>
-            <div th:unless="${openIdLocalId}">
-                <input class="required"
-                       id="username"
-                       size="25"
-                       tabindex="1"
-                       type="text"
-                       th:field="*{username}"
-                       th:accesskey="#{screen.welcome.label.netid.accesskey}"
-                       autocomplete="off"/>
-            </div>
-        </section>
+		<section class="row">
+			<label for="password" th:utext="#{screen.welcome.label.password}" />
 
-        <section class="row">
-            <label for="password" th:utext="#{screen.welcome.label.password}"/>
-            
-            <div>
-                <input class="required"
-                       type="password"
-                       id="password"
-                       size="25"
-                       tabindex="2"
-                       th:accesskey="#{screen.welcome.label.password.accesskey}"
-                       th:field="*{password}"
-                       autocomplete="off"/>
-                <span id="capslock-on" style="display:none;">
-                    <p>
-                        <i class="fa fa-exclamation-circle"></i>
-                        <span th:utext="#{screen.capslock.on}"/>
-                    </p>
-                </span>
-            </div>
-        </section>
-        <section class="row check">
-            <p th:if="${rememberMeAuthenticationEnabled}">
-                <input type="checkbox" name="rememberMe" id="rememberMe" value="true" tabindex="5"  />
-                <label for="rememberMe" th:text="#{screen.rememberme.checkbox.title}"/>
-            </p>
-        </section>
-        
-        <section class="row" th:if="${recaptchaSiteKey}">
-            <div class="g-recaptcha" th:attr="data-sitekey=${recaptchaSiteKey}"/>
-        </section>
+			<div>
+				<input class="required" type="password" id="password" size="25"
+					tabindex="2"
+					th:accesskey="#{screen.welcome.label.password.accesskey}"
+					th:field="*{password}" autocomplete="off" /> <span id="capslock-on"
+					style="display: none;">
+					<p>
+						<i class="fa fa-exclamation-circle"></i> <span
+							th:utext="#{screen.capslock.on}" />
+					</p>
+				</span>
+			</div>
+		</section>
+		<section class="row check">
+			<p th:if="${rememberMeAuthenticationEnabled}">
+				<input type="checkbox" name="rememberMe" id="rememberMe"
+					value="true" tabindex="5" /> <label for="rememberMe"
+					th:text="#{screen.rememberme.checkbox.title}" />
+			</p>
+		</section>
 
-        <section class="row btn-row">
-            <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
-            <input type="hidden" name="_eventId" value="submit"/>
-            <input type="hidden" name="geolocation"/>
+		<section class="row" th:if="${recaptchaSiteKey}">
+			<div class="g-recaptcha" th:attr="data-sitekey=${recaptchaSiteKey}" />
+		</section>
 
-            <input class="btn btn-submit btn-block"
-                   name="submit"
-                   accesskey="l"
-                   th:value="#{screen.welcome.button.login}"
-                   tabindex="6"
-                   type="submit"/>
-        </section>
-    </form>
+		<section class="row btn-row">
+			<input type="hidden" name="execution" th:value="${flowExecutionKey}" />
+			<input type="hidden" name="_eventId" value="submit" /> <input
+				type="hidden" name="geolocation" /> <input
+				class="btn btn-block login-button" name="submit" accesskey="l"
+				th:value="#{screen.welcome.button.login}" tabindex="6" type="submit" />
+		</section>
+	</form>
 
-    <form th:if="${passwordManagementEnabled}" method="post">
-        <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
-        <input type="hidden" name="_eventId" value="resetPassword"/>
-        <span class="fa fa-unlock"></span>
-        <a th:utext="#{screen.pm.button.resetPassword}" href="javascript:void(0)" onclick="$('#misagh').submit();" />
-        <p/>
-    </form>
-   
-    <div th:unless="${passwordManagementEnabled}">
-        <span class="fa fa-question-circle"></span>
-        <span th:utext="#{screen.pm.button.forgotpwd}" />
-        <p/>
-    </div>
-    
-    <script type="text/javascript" th:inline="javascript">
+	<form th:if="${passwordManagementEnabled}" method="post">
+		<input type="hidden" name="execution" th:value="${flowExecutionKey}" />
+		<input type="hidden" name="_eventId" value="resetPassword" /> <span
+			class="fa fa-unlock"></span> <a
+			th:utext="#{screen.pm.button.resetPassword}"
+			href="javascript:void(0)" onclick="$('#misagh').submit();" />
+		<p />
+	</form>
+
+	<div th:unless="${passwordManagementEnabled}">
+		
+		<!-- <span th:utext="#{screen.pm.button.forgotpwd}" /> -->
+		<label class="text-center"> <a href="#" onclick="showMessage()"
+			style="color: #fff;"> <span class="fa fa-question-circle"></span> Forgot your password</a></label>
+		<p />
+		
+		<div id="mailMessage" style="display: none;" class="copyright">
+			<p style="font-size: 14px;">
+				Please send a mail to <a href="mailto:support@benefitsscience.com"
+					onclick="sendMail()" style="color: #FF0;">support@benefitsscience.com</a>
+				to reset your password
+			</p>
+		</div>
+	</div>
+
+	<script type="text/javascript" th:inline="javascript">
         var i = [[#{screen.welcome.button.loginwip}]]
         $("#fm1").submit(function() {
             $(":submit").attr("disabled", true);
@@ -108,5 +100,5 @@
             return true;
         });
     </script>
-    <div th:replace="fragments/loginsidebar"/>
+
 </div>
